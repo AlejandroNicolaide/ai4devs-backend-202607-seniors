@@ -1,8 +1,11 @@
+import { PrismaClient } from '@prisma/client';
 import { Candidate } from '../../domain/models/Candidate';
 import { validateCandidateData } from '../validator';
 import { Education } from '../../domain/models/Education';
 import { WorkExperience } from '../../domain/models/WorkExperience';
 import { Resume } from '../../domain/models/Resume';
+
+const prisma = new PrismaClient();
 
 export const addCandidate = async (candidateData: any) => {
     try {
@@ -62,4 +65,20 @@ export const findCandidateById = async (id: number): Promise<Candidate | null> =
         console.error('Error al buscar el candidato:', error);
         throw new Error('Error al recuperar el candidato');
     }
+};
+
+export const updateCandidateStage = async (candidateId: number, applicationId: number, interviewStep: number) => {
+    const application = await prisma.application.findUnique({ where: { id: applicationId } });
+
+    if (!application) {
+        throw new Error('Application not found');
+    }
+    if (application.candidateId !== candidateId) {
+        throw new Error('This application does not belong to the specified candidate');
+    }
+
+    return await prisma.application.update({
+        where: { id: applicationId },
+        data: { currentInterviewStep: interviewStep }
+    });
 };

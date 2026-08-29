@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { addCandidate, findCandidateById } from '../../application/services/candidateService';
+import { addCandidate, findCandidateById, updateCandidateStage } from '../../application/services/candidateService';
 
 export const addCandidateController = async (req: Request, res: Response) => {
     try {
@@ -28,6 +28,29 @@ export const getCandidateById = async (req: Request, res: Response) => {
         res.json(candidate);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+export const updateCandidateStageController = async (req: Request, res: Response) => {
+    try {
+        const candidateId = parseInt(req.params.id);
+        if (isNaN(candidateId)) {
+            return res.status(400).json({ error: 'Invalid ID format' });
+        }
+
+        const { applicationId, interviewStep } = req.body;
+        if (applicationId === undefined || interviewStep === undefined) {
+            return res.status(400).json({ error: 'applicationId and interviewStep are required' });
+        }
+
+        const updatedApplication = await updateCandidateStage(candidateId, applicationId, interviewStep);
+        res.json({ message: 'Candidate stage updated successfully', data: updatedApplication });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            res.status(400).json({ message: 'Error updating candidate stage', error: error.message });
+        } else {
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
     }
 };
 
