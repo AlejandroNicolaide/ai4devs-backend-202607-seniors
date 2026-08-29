@@ -1,9 +1,11 @@
 import multer from 'multer';
 import { Request, Response } from 'express';
 
+const UPLOAD_DIR = '../uploads/';
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../uploads/');
+        cb(null, UPLOAD_DIR);
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now();

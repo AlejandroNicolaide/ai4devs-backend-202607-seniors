@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../../infrastructure/prisma';
 
 export const getCandidatesForPosition = async (positionId: number) => {
     const applications = await prisma.application.findMany({

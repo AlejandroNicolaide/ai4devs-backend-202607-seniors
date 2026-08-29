@@ -1,14 +1,12 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../../infrastructure/prisma';
 
 export class WorkExperience {
-    id?: number;
-    company: string;
-    position: string;
-    description?: string;
-    startDate: Date;
-    endDate?: Date;
+    readonly id?: number;
+    readonly company: string;
+    readonly position: string;
+    readonly description?: string;
+    readonly startDate: Date;
+    readonly endDate?: Date;
     candidateId?: number;
 
     constructor(data: any) {

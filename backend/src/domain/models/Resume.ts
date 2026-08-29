@@ -1,13 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../../infrastructure/prisma';
 
 export class Resume {
-    id: number;
+    readonly id: number;
     candidateId: number;
-    filePath: string;
-    fileType: string;
-    uploadDate: Date;
+    readonly filePath: string;
+    readonly fileType: string;
+    readonly uploadDate: Date;
 
     constructor(data: any) {
         this.id = data?.id;
@@ -25,8 +23,6 @@ export class Resume {
     }
 
     async create(): Promise<Resume> {
-        console.log(this);
-
         const createdResume = await prisma.resume.create({
             data: {
                 candidateId: this.candidateId,

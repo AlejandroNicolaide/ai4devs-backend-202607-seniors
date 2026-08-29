@@ -1,22 +1,21 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import { prisma } from '../../infrastructure/prisma';
 import { Education } from './Education';
 import { WorkExperience } from './WorkExperience';
 import { Resume } from './Resume';
 import { Application } from './Application';
 
-const prisma = new PrismaClient();
-
 export class Candidate {
-    id?: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone?: string;
-    address?: string;
-    education: Education[];
-    workExperience: WorkExperience[];
-    resumes: Resume[];
-    applications: Application[];
+    readonly id?: number;
+    readonly firstName: string;
+    readonly lastName: string;
+    readonly email: string;
+    readonly phone?: string;
+    readonly address?: string;
+    readonly education: Education[];
+    readonly workExperience: WorkExperience[];
+    readonly resumes: Resume[];
+    readonly applications: Application[];
 
     constructor(data: any) {
         this.id = data.id;
@@ -97,7 +96,6 @@ export class Candidate {
                     data: candidateData
                 });
             } catch (error: any) {
-                console.log(error);
                 if (error instanceof Prisma.PrismaClientInitializationError) {
                     // Database connection error
                     throw new Error('No se pudo conectar con la base de datos. Por favor, asegúrese de que el servidor de base de datos esté en ejecución.');

@@ -1,26 +1,24 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../../infrastructure/prisma';
 
 export class Position {
-    id?: number;
-    companyId: number;
-    interviewFlowId: number;
-    title: string;
-    description: string;
-    status: string;
-    isVisible: boolean;
-    location: string;
-    jobDescription: string;
-    requirements?: string;
-    responsibilities?: string;
-    salaryMin?: number;
-    salaryMax?: number;
-    employmentType?: string;
-    benefits?: string;
-    companyDescription?: string;
-    applicationDeadline?: Date;
-    contactInfo?: string;
+    readonly id?: number;
+    readonly companyId: number;
+    readonly interviewFlowId: number;
+    readonly title: string;
+    readonly description: string;
+    readonly status: string;
+    readonly isVisible: boolean;
+    readonly location: string;
+    readonly jobDescription: string;
+    readonly requirements?: string;
+    readonly responsibilities?: string;
+    readonly salaryMin?: number;
+    readonly salaryMax?: number;
+    readonly employmentType?: string;
+    readonly benefits?: string;
+    readonly companyDescription?: string;
+    readonly applicationDeadline?: Date;
+    readonly contactInfo?: string;
 
     constructor(data: any) {
         this.id = data.id;

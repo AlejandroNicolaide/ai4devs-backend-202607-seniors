@@ -1,13 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../../infrastructure/prisma';
 
 export class Education {
-    id?: number;
-    institution: string;
-    title: string;
-    startDate: Date;
-    endDate?: Date;
+    readonly id?: number;
+    readonly institution: string;
+    readonly title: string;
+    readonly startDate: Date;
+    readonly endDate?: Date;
     candidateId?: number;
 
     constructor(data: any) {
